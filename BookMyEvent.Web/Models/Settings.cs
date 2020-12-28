@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace BookMyEvent.Web
+namespace BookMyEvent.Web.Models
 {
     public class Settings
     {

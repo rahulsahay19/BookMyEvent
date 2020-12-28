@@ -1,4 +1,5 @@
 ﻿{
+  "profiles": {
     "BookMyEvent.Web": {
       "commandName": "Project",
       "launchBrowser": true,
@@ -9,3 +10,4 @@
     }
   }
 }
+

@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
+using BookMyEvent.Grpc;
 using BookMyEvent.Services.EventCatalog.DTOs;
-using BookMyEvent.Services.EventCatalog.Entities;
+
 
 namespace BookMyEvent.Services.EventCatalog.Profiles
 {
@@ -8,7 +9,8 @@ namespace BookMyEvent.Services.EventCatalog.Profiles
     {
         public CategoryProfile()
         {
-            CreateMap<Category, CategoryDTO>().ReverseMap();
+            CreateMap<Entities.Category, CategoryDTO>().ReverseMap();
+            CreateMap<Entities.Category, Category>().ReverseMap();
         }
     }
 }
