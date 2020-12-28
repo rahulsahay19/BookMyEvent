@@ -1,0 +1,55 @@
+﻿using AutoMapper;
+using BookMyEvent.Services.ShoppingCart.DTOs;
+using BookMyEvent.Services.ShoppingCart.Repositories;
+using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Linq;
+using System.Threading.Tasks;
+
+namespace BookMyEvent.Services.ShoppingCart.Controllers
+{
+    [Route("api/baskets")]
+    [ApiController]
+    public class BasketsController : ControllerBase
+    {
+        private readonly IBasketRepository _basketRepository;
+        private readonly IMapper _mapper;
+
+        public BasketsController(IBasketRepository basketRepository, IMapper mapper)
+        {
+            _basketRepository = basketRepository;
+            _mapper = mapper;
+        }
+
+        [HttpGet("{basketId}", Name = "GetBasket")]
+        public async Task<ActionResult<Basket>> Get(Guid basketId)
+        {
+            var basket = await _basketRepository.GetBasketById(basketId);
+            if (basket == null)
+            {
+                return NotFound();
+            }
+
+            var result = _mapper.Map<Basket>(basket);
+            result.NumberOfItems = basket.BasketLines.Sum(bl => bl.TicketAmount);
+            return Ok(result);
+        }
+
+        [HttpPost]
+        public async Task<ActionResult<Basket>> Post(BasketForCreation basketForCreation)
+        {
+            var basketEntity = _mapper.Map<Entities.Basket>(basketForCreation);
+
+            _basketRepository.AddBasket(basketEntity);
+            await _basketRepository.SaveChanges();
+
+            var basketToReturn = _mapper.Map<Basket>(basketEntity);
+
+            return CreatedAtRoute(
+                "GetBasket",
+                new { basketId = basketEntity.BasketId },
+                basketToReturn);
+        }
+    }
+}
+
