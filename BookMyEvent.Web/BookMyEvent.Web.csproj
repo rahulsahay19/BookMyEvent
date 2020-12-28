@@ -1,20 +1,11 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="3.1.5" />
-    <PackageReference Include="Microsoft.Extensions.ApiDescription.Client" Version="3.0.0">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
-    <PackageReference Include="Newtonsoft.Json" Version="12.0.2" />
-    <PackageReference Include="NSwag.ApiDescription.Client" Version="13.0.5">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
+    <Content Remove="OpenAPIs\swagger.json" />
   </ItemGroup>
 
   <ItemGroup>
@@ -23,8 +14,14 @@
   </ItemGroup>
 
   <ItemGroup>
-    <OpenApiReference Include="OpenAPIs\index.html" CodeGenerator="NSwagCSharp" Namespace="BookMyEvent.EventCatalogClient">
-      <SourceUri>https://localhost:5001/swagger/index.html</SourceUri>
-    </OpenApiReference>
+    <PackageReference Include="Grpc.AspNetCore" Version="2.32.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="3.1.10" />
   </ItemGroup>
+
+  <ItemGroup>
+    <Protobuf Include="..\Proto\eventcatalog.proto" GrpcServices="Client">
+      <Link>Protos\eventcatalog.proto</Link>
+    </Protobuf>
+  </ItemGroup>
+
 </Project>

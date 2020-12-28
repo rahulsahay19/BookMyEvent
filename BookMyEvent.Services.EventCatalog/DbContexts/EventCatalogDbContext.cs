@@ -46,12 +46,12 @@ namespace BookMyEvent.Services.EventCatalog.DbContexts
             modelBuilder.Entity<Event>().HasData(new Event
             {
                 EventId = Guid.Parse("{3e1ba46d-d744-48cc-b07a-9ef940f000e0}"),
-                Name = "This is It",
-                Price = 200,
-                Artist = "Michael Jackson",
+                Name = "John Egbert Live",
+                Price = 65,
+                Artist = "John Egbert",
                 Date = DateTime.Now.AddMonths(6),
-                Description = "Michael Jackson for his farwell tour across 27 countries. MJ really needs no introduction since he has already mesmerized the world with his Pop Music.",
-                ImageUrl = "/images/MJ.jpg",
+                Description = "Join John for his farwell tour across 15 continents. John really needs no introduction since he has already mesmerized the world with his banjo.",
+                ImageUrl = "/img/banjo.jpg",
                 CategoryId = concertGuid
             });
 
@@ -63,7 +63,7 @@ namespace BookMyEvent.Services.EventCatalog.DbContexts
                 Artist = "Michael Johnson",
                 Date = DateTime.Now.AddMonths(9),
                 Description = "Michael Johnson doesn't need an introduction. His 25 concert across the globe last year were seen by thousands. Can we add you to the list?",
-                ImageUrl = "/images/michael.jpg",
+                ImageUrl = "/img/michael.jpg",
                 CategoryId = concertGuid
             });
 
@@ -76,7 +76,7 @@ namespace BookMyEvent.Services.EventCatalog.DbContexts
                 Artist = "Nick Sailor",
                 Date = DateTime.Now.AddMonths(8),
                 Description = "The critics are over the moon and so will you after you've watched this sing and dance extravaganza written by Nick Sailor, the man from 'My dad and sister'.",
-                ImageUrl = "/images/musical.jpg",
+                ImageUrl = "/img/musical.jpg",
                 CategoryId = musicGuid
             });
         }

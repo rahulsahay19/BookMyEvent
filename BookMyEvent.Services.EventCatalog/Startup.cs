@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using BookMyEvent.Services.EventCatalog.DbContexts;
 using BookMyEvent.Services.EventCatalog.Repositories;
+using BookMyEvent.Services.EventCatalog.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -31,6 +32,7 @@ namespace BookMyEvent.Services.EventCatalog
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
             services.AddControllers();
+            services.AddGrpc();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Book My Event - Catalog API", Version = "v1" });
@@ -61,6 +63,7 @@ namespace BookMyEvent.Services.EventCatalog
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.MapGrpcService<EventGrpcService>();
             });
         }
     }

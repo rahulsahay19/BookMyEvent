@@ -1,8 +1,8 @@
-﻿using BookMyEvent.Web.Models.Api;
+﻿using BookMyEvent.Grpc;
 using System;
 using System.Collections.Generic;
 
-namespace BookMyEvent.Web.View
+namespace BookMyEvent.Web.Models.View
 {
     public class EventListModel
     {

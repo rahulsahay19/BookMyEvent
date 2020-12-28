@@ -9,7 +9,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{82
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookMyEvent.Web", "BookMyEvent.Web\BookMyEvent.Web.csproj", "{1A79E984-1B9C-4DAC-878B-0652E9FE4117}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookMyEvent.Services.EventCatalog", "BookMyEvent.Services.EventCatalog\BookMyEvent.Services.EventCatalog.csproj", "{0B444E4F-86B6-4912-8C93-50BC5BD6E5EB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookMyEvent.Services.EventCatalog", "BookMyEvent.Services.EventCatalog\BookMyEvent.Services.EventCatalog.csproj", "{0B444E4F-86B6-4912-8C93-50BC5BD6E5EB}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Proto", "Proto", "{356E6C3D-21A8-4E69-8CC0-B65FEE100DE8}"
+	ProjectSection(SolutionItems) = preProject
+		Proto\eventcatalog.proto = Proto\eventcatalog.proto
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
