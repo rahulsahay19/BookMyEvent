@@ -1,9 +1,11 @@
-﻿using BookMyEvent.Web.Extensions;
+﻿using BookMyEvent.Messages;
+using BookMyEvent.Web.Extensions;
 using BookMyEvent.Web.Models;
 using BookMyEvent.Web.Models.Api;
 using BookMyEvent.Web.Models.View;
 using BookMyEvent.Web.Services;
 using Microsoft.AspNetCore.Mvc;
+using Rebus.Bus;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
@@ -13,6 +15,7 @@ namespace BookMyEvent.Web.Controllers
     public class ShoppingBasketController : Controller
     {
         private readonly IShoppingBasketService basketService;
+        private readonly IBus bus;
         private readonly Settings settings;
 
         public ShoppingBasketController(IShoppingBasketService basketService, Settings settings)
@@ -62,6 +65,13 @@ namespace BookMyEvent.Web.Controllers
             var basketId = Request.Cookies.GetCurrentBasketId(settings);
             await basketService.RemoveLine(basketId, lineId);
             return RedirectToAction("Index");
+        }
+
+        public async Task<IActionResult> Pay()
+        {
+            var basketId = Request.Cookies.GetCurrentBasketId(settings);
+            await bus.Send(new PaymentRequestMessage { BasketId = basketId });
+            return View("Thanks");
         }
     }
 }

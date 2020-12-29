@@ -16,7 +16,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Proto", "Proto", "{356E6C3D
 		Proto\eventcatalog.proto = Proto\eventcatalog.proto
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookMyEvent.Services.ShoppingCart", "BookMyEvent.Services.ShoppingCart\BookMyEvent.Services.ShoppingCart.csproj", "{4F2D6C52-7F2B-4983-9F52-4C6642CBAF00}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookMyEvent.Services.ShoppingCart", "BookMyEvent.Services.ShoppingCart\BookMyEvent.Services.ShoppingCart.csproj", "{4F2D6C52-7F2B-4983-9F52-4C6642CBAF00}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookMyEvent.Services.Payment", "BookMyEvent.Services.Payment\BookMyEvent.Services.Payment.csproj", "{833B0A6A-B91B-42AD-BF00-C8CE92579CDA}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{AAF094D8-19D4-411F-BD96-0AAAAF921A19}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookMyEvent.Messages", "BookMyEvent.Messages\BookMyEvent.Messages.csproj", "{C9E7ABDD-5769-4075-9011-9EB149375E4F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -36,6 +42,14 @@ Global
 		{4F2D6C52-7F2B-4983-9F52-4C6642CBAF00}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4F2D6C52-7F2B-4983-9F52-4C6642CBAF00}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4F2D6C52-7F2B-4983-9F52-4C6642CBAF00}.Release|Any CPU.Build.0 = Release|Any CPU
+		{833B0A6A-B91B-42AD-BF00-C8CE92579CDA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{833B0A6A-B91B-42AD-BF00-C8CE92579CDA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{833B0A6A-B91B-42AD-BF00-C8CE92579CDA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{833B0A6A-B91B-42AD-BF00-C8CE92579CDA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C9E7ABDD-5769-4075-9011-9EB149375E4F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C9E7ABDD-5769-4075-9011-9EB149375E4F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C9E7ABDD-5769-4075-9011-9EB149375E4F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C9E7ABDD-5769-4075-9011-9EB149375E4F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -44,6 +58,8 @@ Global
 		{1A79E984-1B9C-4DAC-878B-0652E9FE4117} = {791A06E9-72A8-4713-8C19-89749E1D0466}
 		{0B444E4F-86B6-4912-8C93-50BC5BD6E5EB} = {821DD360-A563-4AB6-9C72-D0945FD7B7AC}
 		{4F2D6C52-7F2B-4983-9F52-4C6642CBAF00} = {821DD360-A563-4AB6-9C72-D0945FD7B7AC}
+		{833B0A6A-B91B-42AD-BF00-C8CE92579CDA} = {821DD360-A563-4AB6-9C72-D0945FD7B7AC}
+		{C9E7ABDD-5769-4075-9011-9EB149375E4F} = {AAF094D8-19D4-411F-BD96-0AAAAF921A19}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {5F6305B2-1AAD-4ACA-9A7B-4A8808D27899}

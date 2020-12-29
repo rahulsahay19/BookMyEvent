@@ -1,10 +1,15 @@
+using BookMyEvent.Messages;
 using BookMyEvent.Web.Models;
 using BookMyEvent.Web.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Azure.Storage;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Rebus.Config;
+using Rebus.Routing.TypeBased;
+using Rebus.ServiceProvider;
 using System;
 
 namespace BookMyEvent.Web
@@ -37,6 +42,14 @@ namespace BookMyEvent.Web
 
 
             services.AddSingleton<Settings>();
+
+            var storageAccount = CloudStorageAccount.Parse(config["AzureQueues:ConnectionString"]);
+
+            services.AddRebus(c => c
+                .Transport(t => t.UseAzureStorageQueuesAsOneWayClient(storageAccount))
+                .Routing(r => r.TypeBased().Map<PaymentRequestMessage>(
+                    config["AzureQueues:QueueName"]))
+            );
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
