@@ -1,5 +1,5 @@
-using BookMyEvent.Grpc;
 using BookMyEvent.Web.Models;
+using BookMyEvent.Web.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -27,8 +27,14 @@ namespace BookMyEvent.Web
             if (environment.IsDevelopment())
                 builder.AddRazorRuntimeCompilation();
 
-            services.AddGrpcClient<Events.EventsClient>(
-                o => o.Address = new Uri(config["ApiConfigs:EventCatalog:Uri"]));
+            //services.AddGrpcClient<Events.EventsClient>(
+            //    o => o.Address = new Uri(config["ApiConfigs:EventCatalog:Uri"]));
+
+            services.AddHttpClient<IEventCatalogService, EventCatalogService>(c =>
+             c.BaseAddress = new Uri(config["ApiConfigs:EventCatalog:Uri"]));
+            services.AddHttpClient<IShoppingBasketService, ShoppingBasketService>(c =>
+                c.BaseAddress = new Uri(config["ApiConfigs:ShoppingBasket:Uri"]));
+
 
             services.AddSingleton<Settings>();
         }

@@ -32,7 +32,7 @@ namespace BookMyEvent.Services.EventCatalog
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
             services.AddControllers();
-            services.AddGrpc();
+           // services.AddGrpc();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Book My Event - Catalog API", Version = "v1" });
@@ -63,7 +63,7 @@ namespace BookMyEvent.Services.EventCatalog
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
-                endpoints.MapGrpcService<EventGrpcService>();
+              //  endpoints.MapGrpcService<EventGrpcService>();
             });
         }
     }

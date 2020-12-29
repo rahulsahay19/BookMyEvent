@@ -1,5 +1,8 @@
-﻿using BookMyEvent.Grpc;
+﻿using BookMyEvent.Web.Extensions;
+using BookMyEvent.Web.Models;
+using BookMyEvent.Web.Models.Api;
 using BookMyEvent.Web.Models.View;
+using BookMyEvent.Web.Services;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
@@ -8,28 +11,36 @@ namespace BookMyEvent.Web.Controllers
 {
     public class EventCatalogController : Controller
     {
-        private readonly Events.EventsClient eventCatalogService;
+        private readonly IEventCatalogService eventCatalogService;
+        private readonly IShoppingBasketService shoppingBasketService;
+        private readonly Settings settings;
 
-        public EventCatalogController(Events.EventsClient eventCatalogService)
+        public EventCatalogController(IEventCatalogService eventCatalogService, IShoppingBasketService shoppingBasketService, Settings settings)
         {
             this.eventCatalogService = eventCatalogService;
+            this.shoppingBasketService = shoppingBasketService;
+            this.settings = settings;
         }
 
         public async Task<IActionResult> Index(Guid categoryId)
         {
-            var getCategories = eventCatalogService.GetAllCategoriesAsync(
-                new GetAllCategoriesRequest());
-            var getEvents = categoryId == Guid.Empty ? eventCatalogService.GetAllAsync(
-                new GetAllEventsRequest()) :
-                eventCatalogService.GetAllByCategoryIdAsync(
-                    new GetAllEventsByCategoryIdRequest { CategoryId = categoryId.ToString() });
-            await Task.WhenAll(new Task[] { getCategories.ResponseAsync, getEvents.ResponseAsync });
+            var currentBasketId = Request.Cookies.GetCurrentBasketId(settings);
+
+            var getBasket = currentBasketId == Guid.Empty ? Task.FromResult<Basket>(null) :
+                shoppingBasketService.GetBasket(currentBasketId);
+            var getCategories = eventCatalogService.GetCategories();
+            var getEvents = categoryId == Guid.Empty ? eventCatalogService.GetAll() :
+                eventCatalogService.GetByCategoryId(categoryId);
+            await Task.WhenAll(new Task[] { getBasket, getCategories, getEvents });
+
+            var numberOfItems = getBasket.Result == null ? 0 : getBasket.Result.NumberOfItems;
 
             return View(
                 new EventListModel
                 {
-                    Events = getEvents.ResponseAsync.Result.Events,
-                    Categories = getCategories.ResponseAsync.Result.Categories,
+                    Events = getEvents.Result,
+                    Categories = getCategories.Result,
+                    NumberOfItems = numberOfItems,
                     SelectedCategory = categoryId
                 }
             );
@@ -43,8 +54,8 @@ namespace BookMyEvent.Web.Controllers
 
         public async Task<IActionResult> Detail(Guid eventId)
         {
-            var ev = await eventCatalogService.GetByEventIdAsync(new GetByEventIdRequest { EventId = eventId.ToString() });
-            return View(ev.Event);
+            var ev = await eventCatalogService.GetEvent(eventId);
+            return View(ev);
         }
     }
 }
