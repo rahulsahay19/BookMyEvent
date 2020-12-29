@@ -18,9 +18,10 @@ namespace BookMyEvent.Web.Controllers
         private readonly IBus bus;
         private readonly Settings settings;
 
-        public ShoppingBasketController(IShoppingBasketService basketService, Settings settings)
+        public ShoppingBasketController(IShoppingBasketService basketService, IBus bus, Settings settings)
         {
             this.basketService = basketService;
+            this.bus = bus;
             this.settings = settings;
         }
 
