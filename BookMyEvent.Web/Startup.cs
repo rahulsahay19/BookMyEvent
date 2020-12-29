@@ -45,6 +45,7 @@ namespace BookMyEvent.Web
 
             var storageAccount = CloudStorageAccount.Parse(config["AzureQueues:ConnectionString"]);
 
+            //One way client means we can only send messages not receive
             services.AddRebus(c => c
                 .Transport(t => t.UseAzureStorageQueuesAsOneWayClient(storageAccount))
                 .Routing(r => r.TypeBased().Map<PaymentRequestMessage>(
@@ -66,6 +67,7 @@ namespace BookMyEvent.Web
             }
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+            app.ApplicationServices.UseRebus();
 
             app.UseRouting();
 

@@ -1,10 +1,10 @@
-﻿@model BookMyEvent.Grpc.Event
+﻿@model BookMyEvent.Web.Models.Api.Event
 <tr>
     <td>
         <img class="artistPic" src="@Model.ImageUrl" alt="Artist pic" />
     </td>
     <td>
-        @Model.Date.ToDateTime().ToShortDateString()
+        @Model.Date.ToShortDateString()
     </td>
     <td>
         @Model.Name
