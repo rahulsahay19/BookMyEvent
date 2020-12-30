@@ -13,5 +13,7 @@ namespace BookMyEvent.Web.Services
         Task<Basket> GetBasket(Guid basketId);
         Task UpdateLine(Guid basketId, BasketLineForUpdate basketLineForUpdate);
         Task RemoveLine(Guid basketId, Guid lineId);
+        Task ApplyCouponToBasket(Guid basketId, CouponForUpdate couponForUpdate);
+        Task<BasketForCheckout> Checkout(Guid basketId, BasketForCheckout basketForCheckout);
     }
 }

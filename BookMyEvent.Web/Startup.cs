@@ -36,21 +36,25 @@ namespace BookMyEvent.Web
             //    o => o.Address = new Uri(config["ApiConfigs:EventCatalog:Uri"]));
 
             services.AddHttpClient<IEventCatalogService, EventCatalogService>(c =>
-             c.BaseAddress = new Uri(config["ApiConfigs:EventCatalog:Uri"]));
+               c.BaseAddress = new Uri(config["ApiConfigs:EventCatalog:Uri"]));
             services.AddHttpClient<IShoppingBasketService, ShoppingBasketService>(c =>
                 c.BaseAddress = new Uri(config["ApiConfigs:ShoppingBasket:Uri"]));
+            services.AddHttpClient<IOrderService, OrderService>(c =>
+                c.BaseAddress = new Uri(config["ApiConfigs:Order:Uri"]));
+            services.AddHttpClient<IDiscountService, DiscountService>(c =>
+                c.BaseAddress = new Uri(config["ApiConfigs:Discount:Uri"]));
 
 
             services.AddSingleton<Settings>();
 
-            var storageAccount = CloudStorageAccount.Parse(config["AzureQueues:ConnectionString"]);
+            //var storageAccount = CloudStorageAccount.Parse(config["AzureQueues:ConnectionString"]);
 
-            //One way client means we can only send messages not receive
-            services.AddRebus(c => c
-                .Transport(t => t.UseAzureStorageQueuesAsOneWayClient(storageAccount))
-                .Routing(r => r.TypeBased().Map<PaymentRequestMessage>(
-                    config["AzureQueues:QueueName"]))
-            );
+            ////One way client means we can only send messages not receive
+            //services.AddRebus(c => c
+            //    .Transport(t => t.UseAzureStorageQueuesAsOneWayClient(storageAccount))
+            //    .Routing(r => r.TypeBased().Map<PaymentRequestMessage>(
+            //        config["AzureQueues:QueueName"]))
+            //);
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -67,7 +71,7 @@ namespace BookMyEvent.Web
             }
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-            app.ApplicationServices.UseRebus();
+           // app.ApplicationServices.UseRebus();
 
             app.UseRouting();
 

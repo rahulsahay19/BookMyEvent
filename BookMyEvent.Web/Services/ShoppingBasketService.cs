@@ -58,6 +58,22 @@ namespace BookMyEvent.Web.Services
         {
             await client.DeleteAsync($"/api/baskets/{basketId}/basketLines/{lineId}");
         }
+
+        public async Task ApplyCouponToBasket(Guid basketId, CouponForUpdate couponForUpdate)
+        {
+            var response = await client.PutAsJson($"/api/baskets/{basketId}/coupon", couponForUpdate);
+            //return await response.ReadContentAs<Coupon>();
+        }
+
+        public async Task<BasketForCheckout> Checkout(Guid basketId, BasketForCheckout basketForCheckout)
+        {
+            var response = await client.PostAsJson($"api/baskets/checkout", basketForCheckout);
+            if (response.IsSuccessStatusCode)
+                return await response.ReadContentAs<BasketForCheckout>();
+            else
+            {
+                throw new Exception("Something went wrong placing your order. Please try again.");
+            }
+        }
     }
 }
-
