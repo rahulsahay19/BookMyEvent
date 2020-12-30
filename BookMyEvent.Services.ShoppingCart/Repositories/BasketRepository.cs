@@ -28,6 +28,17 @@ namespace BookMyEvent.Services.ShoppingCart.Repositories
                 .AnyAsync(b => b.BasketId == basketId);
         }
 
+        public async Task ClearBasket(Guid basketId)
+        {
+            var basketLinesToClear = _shoppingCartDbContext.BasketLines.Where(b => b.BasketId == basketId);
+            _shoppingCartDbContext.BasketLines.RemoveRange(basketLinesToClear);
+
+            var basket = _shoppingCartDbContext.Baskets.FirstOrDefault(b => b.BasketId == basketId);
+            if (basket != null) basket.CouponId = null;
+
+            await SaveChanges();
+        }
+
         public void AddBasket(Basket basket)
         {
             _shoppingCartDbContext.Baskets.Add(basket);

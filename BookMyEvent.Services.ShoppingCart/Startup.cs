@@ -1,4 +1,5 @@
 using AutoMapper;
+using BookMyEvent.Integration.MessagingBus;
 using BookMyEvent.Services.ShoppingCart.DbContexts;
 using BookMyEvent.Services.ShoppingCart.Repositories;
 using BookMyEvent.Services.ShoppingCart.Services;
@@ -9,7 +10,10 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using Polly;
+using Polly.Extensions.Http;
 using System;
+using System.Net.Http;
 
 namespace BookMyEvent.Services.ShoppingCart
 {
@@ -26,13 +30,23 @@ namespace BookMyEvent.Services.ShoppingCart
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
             services.AddScoped<IBasketRepository, BasketRepository>();
             services.AddScoped<IBasketLinesRepository, BasketLinesRepository>();
             services.AddScoped<IEventRepository, EventRepository>();
+            services.AddScoped<IBasketChangeEventRepository, BasketChangeEventRepository>();
+
+            services.AddSingleton<IMessageBus, AzServiceBusMessageBus>();
+
             services.AddHttpClient<IEventCatalogService, EventCatalogService>(c =>
                 c.BaseAddress = new Uri(Configuration["ApiConfigs:EventCatalog:Uri"]));
+
+            services.AddHttpClient<IDiscountService, DiscountService>(c =>
+                c.BaseAddress = new Uri(Configuration["ApiConfigs:Discount:Uri"]))
+                .AddPolicyHandler(GetRetryPolicy())
+                .AddPolicyHandler(GetCircuitBreakerPolicy());
 
             services.AddDbContext<ShoppingCartDbContext>(options =>
             {
@@ -41,7 +55,7 @@ namespace BookMyEvent.Services.ShoppingCart
 
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Shopping Cart API", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Shopping Basket API", Version = "v1" });
             });
         }
 
@@ -71,6 +85,23 @@ namespace BookMyEvent.Services.ShoppingCart
             {
                 endpoints.MapControllers();
             });
+        }
+        private static IAsyncPolicy<HttpResponseMessage> GetRetryPolicy()
+        {
+            return HttpPolicyExtensions.HandleTransientHttpError()
+                .WaitAndRetryAsync(5,
+                    retryAttempt => TimeSpan.FromMilliseconds(Math.Pow(1.5, retryAttempt) * 1000),
+                    (_, waitingTime) =>
+                    {
+                        Console.WriteLine("Retrying due to Polly retry policy");
+                    });
+        }
+
+        private static IAsyncPolicy<HttpResponseMessage> GetCircuitBreakerPolicy()
+        {
+            return HttpPolicyExtensions
+                .HandleTransientHttpError()
+                .CircuitBreakerAsync(3, TimeSpan.FromSeconds(15));
         }
     }
 }

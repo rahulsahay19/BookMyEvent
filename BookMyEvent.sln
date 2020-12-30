@@ -18,17 +18,23 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Proto", "Proto", "{356E6C3D
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookMyEvent.Services.ShoppingCart", "BookMyEvent.Services.ShoppingCart\BookMyEvent.Services.ShoppingCart.csproj", "{4F2D6C52-7F2B-4983-9F52-4C6642CBAF00}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookMyEvent.Services.Payment", "BookMyEvent.Services.Payment\BookMyEvent.Services.Payment.csproj", "{833B0A6A-B91B-42AD-BF00-C8CE92579CDA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookMyEvent.Services.Payment", "BookMyEvent.Services.Payment\BookMyEvent.Services.Payment.csproj", "{833B0A6A-B91B-42AD-BF00-C8CE92579CDA}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{AAF094D8-19D4-411F-BD96-0AAAAF921A19}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookMyEvent.Messages", "BookMyEvent.Messages\BookMyEvent.Messages.csproj", "{C9E7ABDD-5769-4075-9011-9EB149375E4F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookMyEvent.Messages", "BookMyEvent.Messages\BookMyEvent.Messages.csproj", "{C9E7ABDD-5769-4075-9011-9EB149375E4F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookMyEvent.Services.Discount", "BookMyEvent.Services.Discount\BookMyEvent.Services.Discount.csproj", "{7DFD06C1-5796-452C-B573-A98D09766397}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookMyEvent.Services.Discount", "BookMyEvent.Services.Discount\BookMyEvent.Services.Discount.csproj", "{7DFD06C1-5796-452C-B573-A98D09766397}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookMyEvent.Services.Marketing", "BookMyEvent.Services.Marketing\BookMyEvent.Services.Marketing.csproj", "{E113D2CC-ADD3-46DB-B644-647F9901F4FC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookMyEvent.Services.Marketing", "BookMyEvent.Services.Marketing\BookMyEvent.Services.Marketing.csproj", "{E113D2CC-ADD3-46DB-B644-647F9901F4FC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookMyEvent.Services.Ordering", "BookMyEvent.Services.Ordering\BookMyEvent.Services.Ordering.csproj", "{552938DC-5832-442B-A9E1-1D2C2636D2D4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookMyEvent.Services.Ordering", "BookMyEvent.Services.Ordering\BookMyEvent.Services.Ordering.csproj", "{552938DC-5832-442B-A9E1-1D2C2636D2D4}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Integration", "Integration", "{13FB86C0-B16D-4390-B824-46561CF571FA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookMyEvent.Integration.Messages", "BookMyEvent.Integration.Messages\BookMyEvent.Integration.Messages.csproj", "{2491992C-C6BF-4DDC-8690-AF840A8E2C87}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookMyEvent.Integration.MessagingBus", "BookMyEvent.Integration.MessagingBus\BookMyEvent.Integration.MessagingBus.csproj", "{19EE5BF4-C3BA-47C9-AEC0-119B6113755E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -68,6 +74,14 @@ Global
 		{552938DC-5832-442B-A9E1-1D2C2636D2D4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{552938DC-5832-442B-A9E1-1D2C2636D2D4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{552938DC-5832-442B-A9E1-1D2C2636D2D4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2491992C-C6BF-4DDC-8690-AF840A8E2C87}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2491992C-C6BF-4DDC-8690-AF840A8E2C87}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2491992C-C6BF-4DDC-8690-AF840A8E2C87}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2491992C-C6BF-4DDC-8690-AF840A8E2C87}.Release|Any CPU.Build.0 = Release|Any CPU
+		{19EE5BF4-C3BA-47C9-AEC0-119B6113755E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{19EE5BF4-C3BA-47C9-AEC0-119B6113755E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{19EE5BF4-C3BA-47C9-AEC0-119B6113755E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{19EE5BF4-C3BA-47C9-AEC0-119B6113755E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -81,6 +95,8 @@ Global
 		{7DFD06C1-5796-452C-B573-A98D09766397} = {821DD360-A563-4AB6-9C72-D0945FD7B7AC}
 		{E113D2CC-ADD3-46DB-B644-647F9901F4FC} = {821DD360-A563-4AB6-9C72-D0945FD7B7AC}
 		{552938DC-5832-442B-A9E1-1D2C2636D2D4} = {821DD360-A563-4AB6-9C72-D0945FD7B7AC}
+		{2491992C-C6BF-4DDC-8690-AF840A8E2C87} = {13FB86C0-B16D-4390-B824-46561CF571FA}
+		{19EE5BF4-C3BA-47C9-AEC0-119B6113755E} = {13FB86C0-B16D-4390-B824-46561CF571FA}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {5F6305B2-1AAD-4ACA-9A7B-4A8808D27899}
