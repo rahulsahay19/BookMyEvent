@@ -7,6 +7,9 @@ using Newtonsoft.Json;
 using System.Text;
 using System.Threading;
 using BookMyEvent.Integration.MessagingBus;
+using BookMyEvent.Services.Ordering.Repositories;
+using BookMyEvent.Services.Ordering.Messages;
+using BookMyEvent.Services.Ordering.Entities;
 
 namespace BookMyEvent.Services.Ordering.Messaging
 {

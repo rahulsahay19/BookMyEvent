@@ -1,6 +1,7 @@
 ﻿using BookMyEvent.Services.Ordering.Messaging;
 using Microsoft.AspNetCore.Builder;
-
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 namespace BookMyEvent.Services.Ordering.Extensions
 {
     public static class ApplicationBuilderExtensions

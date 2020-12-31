@@ -22,12 +22,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\" />
-    <Folder Include="Messages\" />
-    <Folder Include="Repositories\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\BookMyEvent.Integration.Messages\BookMyEvent.Integration.Messages.csproj" />
     <ProjectReference Include="..\BookMyEvent.Integration.MessagingBus\BookMyEvent.Integration.MessagingBus.csproj" />
   </ItemGroup>
