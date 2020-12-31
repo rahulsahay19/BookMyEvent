@@ -4,5 +4,33 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="7.0.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.1.6">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.5" />
+    <PackageReference Include="Microsoft.Azure.ServiceBus" Version="4.1.4" />
+
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.3">
+
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="5.5.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Controllers\" />
+    <Folder Include="Messages\" />
+    <Folder Include="Repositories\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\BookMyEvent.Integration.Messages\BookMyEvent.Integration.Messages.csproj" />
+    <ProjectReference Include="..\BookMyEvent.Integration.MessagingBus\BookMyEvent.Integration.MessagingBus.csproj" />
+  </ItemGroup>
+
 
 </Project>
