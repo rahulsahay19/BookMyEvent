@@ -10,8 +10,7 @@ namespace BookMyEvent.Integration.MessagingBus
 {
     public class AzServiceBusMessageBus : IMessageBus
     {
-        private string connectionString =
-            "Endpoint=sb://<your-namespace>.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=<your_key>";
+        private string connectionString = "Endpoint=sb://bookmyevent.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=ukJcrm3iAD2+08w0eowvhdefNJMwkvGu4eCV6y08efk=";
 
         public async Task PublishMessage(IntegrationBaseMessage message, string topicName)
         {

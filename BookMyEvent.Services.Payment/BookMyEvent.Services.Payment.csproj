@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk.Worker">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
@@ -9,6 +9,6 @@
     <PackageReference Include="Rebus.AzureQueues" Version="1.0.0" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\BookMyEvent.Messages\BookMyEvent.Messages.csproj" />
+    <ProjectReference Include="..\BookMyEvent.Integration.MessagingBus\BookMyEvent.Integration.MessagingBus.csproj" />
   </ItemGroup>
 </Project>

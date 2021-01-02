@@ -32,9 +32,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookMyEvent.Services.Orderi
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Integration", "Integration", "{13FB86C0-B16D-4390-B824-46561CF571FA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookMyEvent.Integration.Messages", "BookMyEvent.Integration.Messages\BookMyEvent.Integration.Messages.csproj", "{2491992C-C6BF-4DDC-8690-AF840A8E2C87}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookMyEvent.Integration.Messages", "BookMyEvent.Integration.Messages\BookMyEvent.Integration.Messages.csproj", "{2491992C-C6BF-4DDC-8690-AF840A8E2C87}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookMyEvent.Integration.MessagingBus", "BookMyEvent.Integration.MessagingBus\BookMyEvent.Integration.MessagingBus.csproj", "{19EE5BF4-C3BA-47C9-AEC0-119B6113755E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookMyEvent.Integration.MessagingBus", "BookMyEvent.Integration.MessagingBus\BookMyEvent.Integration.MessagingBus.csproj", "{19EE5BF4-C3BA-47C9-AEC0-119B6113755E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Fake", "Fake", "{99DE57FE-A9C2-4DB8-AF98-489BF076C961}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "External.PaymentGateway", "External.PaymentGateway\External.PaymentGateway.csproj", "{AB1EADE6-F1FC-40FF-A7E3-0E788340FAD8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -82,6 +86,10 @@ Global
 		{19EE5BF4-C3BA-47C9-AEC0-119B6113755E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{19EE5BF4-C3BA-47C9-AEC0-119B6113755E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{19EE5BF4-C3BA-47C9-AEC0-119B6113755E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AB1EADE6-F1FC-40FF-A7E3-0E788340FAD8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AB1EADE6-F1FC-40FF-A7E3-0E788340FAD8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AB1EADE6-F1FC-40FF-A7E3-0E788340FAD8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AB1EADE6-F1FC-40FF-A7E3-0E788340FAD8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -97,6 +105,7 @@ Global
 		{552938DC-5832-442B-A9E1-1D2C2636D2D4} = {821DD360-A563-4AB6-9C72-D0945FD7B7AC}
 		{2491992C-C6BF-4DDC-8690-AF840A8E2C87} = {13FB86C0-B16D-4390-B824-46561CF571FA}
 		{19EE5BF4-C3BA-47C9-AEC0-119B6113755E} = {13FB86C0-B16D-4390-B824-46561CF571FA}
+		{AB1EADE6-F1FC-40FF-A7E3-0E788340FAD8} = {99DE57FE-A9C2-4DB8-AF98-489BF076C961}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {5F6305B2-1AAD-4ACA-9A7B-4A8808D27899}
