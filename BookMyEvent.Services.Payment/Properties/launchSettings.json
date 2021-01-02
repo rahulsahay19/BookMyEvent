@@ -2,8 +2,10 @@
   "profiles": {
     "BookMyEvent.Services.Payment": {
       "commandName": "Project",
+      "launchBrowser": false,
+      "applicationUrl": "https://localhost:5006",
       "environmentVariables": {
-        "DOTNET_ENVIRONMENT": "Development"
+        "ASPNETCORE_ENVIRONMENT": "Development"
       }
     }
   }
