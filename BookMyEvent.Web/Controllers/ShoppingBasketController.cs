@@ -1,5 +1,4 @@
-﻿using BookMyEvent.Messages;
-using BookMyEvent.Web.Extensions;
+﻿using BookMyEvent.Web.Extensions;
 using BookMyEvent.Web.Models;
 using BookMyEvent.Web.Models.Api;
 using BookMyEvent.Web.Models.View;
