@@ -3,6 +3,7 @@ using BookMyEvent.Integration.MessagingBus;
 using BookMyEvent.Services.ShoppingCart.DbContexts;
 using BookMyEvent.Services.ShoppingCart.Repositories;
 using BookMyEvent.Services.ShoppingCart.Services;
+using BookMyEvent.Services.ShoppingCart.Worker;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -32,6 +33,7 @@ namespace BookMyEvent.Services.ShoppingCart
             services.AddControllers();
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+            services.AddHostedService<ServiceBusListener>();
             var optionsBuilder = new DbContextOptionsBuilder<ShoppingCartDbContext>();
             optionsBuilder.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
 
