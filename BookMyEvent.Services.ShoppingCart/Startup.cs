@@ -32,6 +32,10 @@ namespace BookMyEvent.Services.ShoppingCart
             services.AddControllers();
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+            var optionsBuilder = new DbContextOptionsBuilder<ShoppingCartDbContext>();
+            optionsBuilder.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
+
+            services.AddSingleton(new BasketLinesIntegrationRepository(optionsBuilder.Options));
 
             services.AddScoped<IBasketRepository, BasketRepository>();
             services.AddScoped<IBasketLinesRepository, BasketLinesRepository>();

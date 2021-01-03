@@ -20,6 +20,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\BookMyEvent.Integration.MessagingBus\BookMyEvent.Integration.MessagingBus.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Protobuf Include="..\Proto\eventcatalog.proto" GrpcServices="Server">
       <Link>Protos\eventcatalog.proto</Link>
     </Protobuf>

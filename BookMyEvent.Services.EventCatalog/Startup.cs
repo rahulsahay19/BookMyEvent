@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using BookMyEvent.Integration.MessagingBus;
 using BookMyEvent.Services.EventCatalog.DbContexts;
 using BookMyEvent.Services.EventCatalog.Repositories;
 using BookMyEvent.Services.EventCatalog.Services;
@@ -30,6 +31,8 @@ namespace BookMyEvent.Services.EventCatalog
             services.AddScoped<IEventRepository, EventRepository>();
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
+            services.AddSingleton<IMessageBus, AzServiceBusMessageBus>();
 
             services.AddControllers();
            // services.AddGrpc();

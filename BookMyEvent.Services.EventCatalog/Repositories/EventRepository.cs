@@ -27,5 +27,10 @@ namespace BookMyEvent.Services.EventCatalog.Repositories
         {
             return await _eventCatalogDbContext.Events.Include(x => x.Category).Where(x => x.EventId == eventId).FirstOrDefaultAsync();
         }
+
+        public async Task<bool> SaveChanges()
+        {
+            return (await _eventCatalogDbContext.SaveChangesAsync() > 0);
+        }
     }
 }
