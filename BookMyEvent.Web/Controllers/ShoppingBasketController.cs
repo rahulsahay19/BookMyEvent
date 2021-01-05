@@ -4,6 +4,7 @@ using BookMyEvent.Web.Models.Api;
 using BookMyEvent.Web.Models.View;
 using BookMyEvent.Web.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using Rebus.Bus;
 using System;
 using System.Linq;
@@ -16,12 +17,14 @@ namespace BookMyEvent.Web.Controllers
         private readonly IShoppingBasketService basketService;
         private readonly IDiscountService discountService;
         private readonly Settings settings;
+        private readonly IConfiguration config;
 
-        public ShoppingBasketController(IShoppingBasketService basketService, Settings settings, IDiscountService discountService)
+        public ShoppingBasketController(IShoppingBasketService basketService, Settings settings, IDiscountService discountService, IConfiguration configuration)
         {
             this.basketService = basketService;
             this.settings = settings;
             this.discountService = discountService;
+            this.config = configuration;
         }
 
         public async Task<IActionResult> Index()
@@ -99,7 +102,28 @@ namespace BookMyEvent.Web.Controllers
 
         public IActionResult Checkout()
         {
-            return View();
+            if (config["DefaultUserData:UseDefaultData"] == "True")
+            {
+                BasketCheckoutViewModel vm = new BasketCheckoutViewModel
+                {
+                    FirstName = config["DefaultUserData:Data:FirstName"],
+                    LastName = config["DefaultUserData:Data:LastName"],
+                    Email = config["DefaultUserData:Data:Email"],
+                    Address = config["DefaultUserData:Data:Address"],
+                    City = config["DefaultUserData:Data:City"],
+                    Country = config["DefaultUserData:Data:Country"],
+                    ZipCode = config["DefaultUserData:Data:ZipCode"],
+                    CardNumber = config["DefaultUserData:Data:CardNumber"],
+                    CardName = config["DefaultUserData:Data:CardName"],
+                    CardExpiration = config["DefaultUserData:Data:CardExpiration"],
+                    CvvCode = config["DefaultUserData:Data:CvvCode"],
+                };
+                return View(vm);
+            }
+            else
+            {
+                return View();
+            }
         }
 
         [HttpPost]

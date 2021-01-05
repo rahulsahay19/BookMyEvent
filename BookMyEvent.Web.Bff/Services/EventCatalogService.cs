@@ -60,5 +60,5 @@ namespace BookMyEvent.Web.Bff.Services
     }
 
 }
-}
+
 

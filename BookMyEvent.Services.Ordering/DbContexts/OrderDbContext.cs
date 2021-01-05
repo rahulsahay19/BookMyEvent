@@ -11,6 +11,8 @@ namespace BookMyEvent.Services.Ordering.DbContexts
         }
 
         public DbSet<Order> Orders { get; set; }
+        public DbSet<OrderLine> OrderLines { get; set; }
+        public DbSet<Customer> Customers { get; set; }
 
     }
 }

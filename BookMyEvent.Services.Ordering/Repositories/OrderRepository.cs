@@ -36,7 +36,9 @@ namespace BookMyEvent.Services.Ordering.Repositories
         {
             using (var _orderDbContext = new OrderDbContext(dbContextOptions))
             {
-                return await _orderDbContext.Orders.Where(o => o.Id == orderId).FirstOrDefaultAsync();
+                return await _orderDbContext.Orders
+                    .Include(o => o.OrderLines)
+                    .Where(o => o.Id == orderId).FirstOrDefaultAsync();
             }
         }
 
@@ -49,5 +51,31 @@ namespace BookMyEvent.Services.Ordering.Repositories
                 await _orderDbContext.SaveChangesAsync();
             }
         }
+
+        /// <summary>
+        /// Method used by worker to update Events on OrderLines when message received
+        /// </summary>
+        /// <param name="eventUpdate"></param>
+        /// <returns></returns>
+        public async Task UpdateOrderEventInformation(DTOs.EventUpdate eventUpdate)
+        {
+            await using (var orderDbContext = new OrderDbContext(dbContextOptions))
+            {
+                var orderLinesToUpdate = orderDbContext.OrderLines
+                    .Include(o => o.Order)
+                    .Where(x => x.EventId == eventUpdate.EventId);
+
+                await orderLinesToUpdate.ForEachAsync((orderLineToUpdate) =>
+                {
+                    orderLineToUpdate.EventName = eventUpdate.Name;
+                    orderLineToUpdate.EventDate = eventUpdate.Date;
+                    orderLineToUpdate.Message = eventUpdate.Message;
+                    orderLineToUpdate.Order.Message = "There has been a change to an event on this order.";
+                });
+
+                await orderDbContext.SaveChangesAsync();
+            }
+        }
+
     }
 }

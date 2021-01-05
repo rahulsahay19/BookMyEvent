@@ -4,6 +4,7 @@ using BookMyEvent.Services.Ordering.DbContexts;
 using BookMyEvent.Services.Ordering.Extensions;
 using BookMyEvent.Services.Ordering.Messaging;
 using BookMyEvent.Services.Ordering.Repositories;
+using BookMyEvent.Services.Ordering.Worker;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -25,9 +26,10 @@ namespace BookMyEvent.Services.Ordering
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
-        // todo
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddHostedService<ServiceBusListener>();
+
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
             services.AddDbContext<OrderDbContext>(options =>
@@ -36,12 +38,13 @@ namespace BookMyEvent.Services.Ordering
             });
 
             services.AddScoped<IOrderRepository, OrderRepository>();
+            services.AddScoped<ICustomerRepository, CustomerRepository>();
 
             //Specific DbContext for use from singleton AzServiceBusConsumer
             var optionsBuilder = new DbContextOptionsBuilder<OrderDbContext>();
             optionsBuilder.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
-
             services.AddSingleton(new OrderRepository(optionsBuilder.Options));
+            services.AddSingleton(new CustomerRepository(optionsBuilder.Options));
 
             services.AddSingleton<IMessageBus, AzServiceBusMessageBus>();
 

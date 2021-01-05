@@ -50,7 +50,7 @@ namespace BookMyEvent.Gateway.WebBff
 
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "GloboTicket Gateway BFF for Web API", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Book My Event Gateway BFF for Web API", Version = "v1" });
             });
         }
 

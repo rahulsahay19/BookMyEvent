@@ -10,7 +10,9 @@ namespace BookMyEvent.Services.Ordering.Repositories
         Task<List<Order>> GetOrdersForUser(Guid userId);
         Task AddOrder(Order order);
         Task<Order> GetOrderById(Guid orderId);
+        Task UpdateOrderEventInformation(DTOs.EventUpdate eventUpdate);
         Task UpdateOrderPaymentStatus(Guid orderId, bool paid);
+
 
     }
 }

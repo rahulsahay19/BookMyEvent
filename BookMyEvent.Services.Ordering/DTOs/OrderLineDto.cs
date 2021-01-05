@@ -1,12 +1,10 @@
 ﻿using System;
-using System.ComponentModel.DataAnnotations;
 
-namespace BookMyEvent.Services.Ordering.Entities
+namespace BookMyEvent.Services.Ordering.DTOs
 {
-    public class OrderLine
+    public class OrderLineDto
     {
         public Guid OrderLineId { get; set; }
-        [Required]
         public Guid OrderId { get; set; }
         public int Price { get; set; }
         public int TicketAmount { get; set; }
@@ -17,6 +15,5 @@ namespace BookMyEvent.Services.Ordering.Entities
         public string VenueCity { get; set; }
         public string VenueCountry { get; set; }
         public string Message { get; set; }
-        public Order Order { get; set; }
     }
 }

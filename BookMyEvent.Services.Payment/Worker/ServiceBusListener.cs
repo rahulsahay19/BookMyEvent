@@ -76,14 +76,15 @@ namespace BookMyEvent.Services.Payment.Worker
                 Total = orderPaymentRequestMessage.Total
             };
 
-            var result = await externalGatewayPaymentService.PerformPayment(paymentInfo);
+            // external payment service not implemented
+            // var result = await externalGatewayPaymentService.PerformPayment(paymentInfo);
 
             await subscriptionClient.CompleteAsync(message.SystemProperties.LockToken);
 
             //send payment result to order service via service bus
             OrderPaymentUpdateMessage orderPaymentUpdateMessage = new OrderPaymentUpdateMessage
             {
-                PaymentSuccess = result,
+                PaymentSuccess = true,
                 OrderId = orderPaymentRequestMessage.OrderId
             };
 
