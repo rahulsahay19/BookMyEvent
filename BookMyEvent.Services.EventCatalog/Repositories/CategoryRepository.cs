@@ -16,6 +16,7 @@ namespace BookMyEvent.Services.EventCatalog.Repositories
             _eventCatalogDbContext = eventCatalogDbContext;
         }
 
+
         public async Task<IEnumerable<Category>> GetAllCategories()
         {
             return await _eventCatalogDbContext.Categories.ToListAsync();

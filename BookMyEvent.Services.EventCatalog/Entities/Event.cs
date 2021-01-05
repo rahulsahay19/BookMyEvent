@@ -15,5 +15,8 @@ namespace BookMyEvent.Services.EventCatalog.Entities
         public string ImageUrl { get; set; }
         public Guid CategoryId { get; set; }
         public Category Category { get; set; }
+        public Guid VenueId { get; set; }
+        public Venue Venue { get; set; }
+
     }
 }

@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace BookMyEvent.Services.EventCatalog.Repositories
 {
-   public interface ICategoryRepository
+    public interface ICategoryRepository
     {
         Task<IEnumerable<Category>> GetAllCategories();
         Task<Category> GetCategoryById(string categoryId);

@@ -1,9 +1,11 @@
 ﻿using AutoMapper;
 using BookMyEvent.Integration.MessagingBus;
 using BookMyEvent.Services.EventCatalog.DTOs;
+using BookMyEvent.Services.EventCatalog.Entities;
 using BookMyEvent.Services.EventCatalog.Messages;
 using BookMyEvent.Services.EventCatalog.Repositories;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -14,59 +16,85 @@ namespace BookMyEvent.Services.EventCatalog.Controllers
     [ApiController]
     public class EventController : ControllerBase
     {
-        private readonly IEventRepository _eventRepository;
-        private readonly IMapper _mapper;
-        private readonly IMessageBus _messageBus;
+        //private readonly IEventRepository eventRepository;
+        private readonly IUnitOfWork unitOfWork;
+        private readonly IMapper mapper;
+        private readonly IMessageBus messageBus;
 
-        public EventController(IEventRepository eventRepository, IMapper mapper, IMessageBus messageBus)
+        public EventController(IUnitOfWork unitOfWork, IMapper mapper, IMessageBus messageBus)
         {
-            _eventRepository = eventRepository;
-            _mapper = mapper;
-            _messageBus = messageBus;
+            //this.eventRepository = eventRepository;
+            this.unitOfWork = unitOfWork;
+            this.mapper = mapper;
+            this.messageBus = messageBus;
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<EventDTO>>> Get(
+        public async Task<ActionResult<IEnumerable<DTOs.EventDTO>>> Get(
             [FromQuery] Guid categoryId)
         {
-            var result = await _eventRepository.GetEvents(categoryId);
-            return Ok(_mapper.Map<List<EventDTO>>(result));
+            var result = await unitOfWork.EventRepository.GetEvents(categoryId);
+            return Ok(mapper.Map<List<DTOs.EventDTO>>(result));
         }
 
         [HttpGet("{eventId}")]
-        public async Task<ActionResult<EventDTO>> GetById(Guid eventId)
+        public async Task<ActionResult<DTOs.EventDTO>> GetById(Guid eventId)
         {
-            var result = await _eventRepository.GetEventById(eventId);
-            return Ok(_mapper.Map<EventDTO>(result));
+            var result = await unitOfWork.EventRepository.GetEventById(eventId);
+            return Ok(mapper.Map<DTOs.EventDTO>(result));
         }
 
-        [HttpPost("eventpriceupdate")]
-        public async Task<ActionResult<PriceUpdate>> Post(PriceUpdate priceUpdate)
+        [HttpPost("eventupdate")]
+        public async Task<ActionResult<EventUpdate>> Post(EventUpdate eventUpdate)
         {
-            var eventToUpdate = await _eventRepository.GetEventById(priceUpdate.EventId);
-            eventToUpdate.Price = priceUpdate.Price;
-            await _eventRepository.SaveChanges();
+            var eventToUpdate = await unitOfWork.EventRepository.GetEventById(eventUpdate.EventId);
 
-            //send integration event on to service bus
+            eventToUpdate.Name = eventUpdate.Name;
+            eventToUpdate.Price = eventUpdate.Price;
+            eventToUpdate.Date = eventUpdate.Date;
+            // message property is only for the message to other microservices
 
-            PriceUpdatedMessage priceUpdatedMessage = new PriceUpdatedMessage
+            // structure message to be sent to service bus
+            EventUpdatedMessage eventUpdatedMessage = new EventUpdatedMessage
             {
-                EventId = priceUpdate.EventId,
-                Price = priceUpdate.Price
+                Id = Guid.NewGuid(),
+                CreationDateTime = DateTime.Now,
+                EventId = eventUpdate.EventId,
+                Name = eventUpdate.Name,
+                Date = eventUpdate.Date,
+                Price = eventUpdate.Price,
+                Message = eventUpdate.Message
             };
+
+            // serialize message for storage in database table text field
+            var jsonMessage = JsonConvert.SerializeObject(eventUpdatedMessage);
+
+            IntegrationEventLog logEntry = new IntegrationEventLog
+            {
+                IntegrationEventType = "TicketedEventChange",
+                ServiceBusTopicName = "eventupdatedmessage",
+                IntegrationEventBody = jsonMessage,
+                State = "Pending"
+            };
+
+            unitOfWork.IntegrationEventLogRepository.AddEventLogEntry(logEntry);
 
             try
             {
-                await _messageBus.PublishMessage(priceUpdatedMessage, "priceupdatedmessage");
+                unitOfWork.Commit();
+
+                // await messageBus.PublishMessage(eventUpdatedMessage, "eventupdatedmessage");
             }
             catch (Exception e)
             {
+                unitOfWork.Rollback();
+
                 Console.WriteLine(e);
                 throw;
             }
 
-
-            return Ok(priceUpdate);
+            return Ok(eventUpdate);
         }
+
     }
 }

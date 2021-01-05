@@ -16,29 +16,44 @@ namespace BookMyEvent.Services.EventCatalog
 {
     public class Startup
     {
-        public IConfiguration Configuration { get; }
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
         }
 
+        public IConfiguration Configuration { get; }
+
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<EventCatalogDbContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            //services.AddDbContext<EventCatalogDbContext>(
+            //    options => options.UseSqlServer(
+            //        Configuration.GetConnectionString("DefaultConnection"),
+            //        providerOptions => providerOptions.EnableRetryOnFailure(
+            //            maxRetryCount: 10,
+            //            maxRetryDelay: TimeSpan.FromSeconds(30),
+            //            errorNumbersToAdd: null)
+            //        )
+            //    );
+
+            services.AddDbContext<EventCatalogDbContext>(
+                options => options.UseSqlServer(
+                    Configuration.GetConnectionString("DefaultConnection"),
+                    providerOptions => providerOptions.EnableRetryOnFailure()));
 
             services.AddScoped<ICategoryRepository, CategoryRepository>();
-            services.AddScoped<IEventRepository, EventRepository>();
+            //services.AddScoped<IEventRepository, EventRepository>();
+
+            // provides access to IEventRepository and IEventLogRepository
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
             services.AddSingleton<IMessageBus, AzServiceBusMessageBus>();
 
             services.AddControllers();
-           // services.AddGrpc();
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Book My Event - Catalog API", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Event Catalog API", Version = "v1" });
             });
         }
 
@@ -55,7 +70,7 @@ namespace BookMyEvent.Services.EventCatalog
 
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Book My Event - Catalog API");
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Event Catalog API V1");
 
             });
 
@@ -66,7 +81,6 @@ namespace BookMyEvent.Services.EventCatalog
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
-              //  endpoints.MapGrpcService<EventGrpcService>();
             });
         }
     }

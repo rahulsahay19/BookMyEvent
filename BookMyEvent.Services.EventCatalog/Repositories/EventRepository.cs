@@ -16,21 +16,28 @@ namespace BookMyEvent.Services.EventCatalog.Repositories
         {
             _eventCatalogDbContext = eventCatalogDbContext;
         }
+
         public async Task<IEnumerable<Event>> GetEvents(Guid categoryId)
         {
             return await _eventCatalogDbContext.Events
                 .Include(x => x.Category)
-                .Where(x => (x.CategoryId == categoryId || categoryId == Guid.Empty)).ToListAsync();
+                .Where(x => (x.CategoryId == categoryId || categoryId == Guid.Empty))
+                .Include(x => x.Venue)
+                .ToListAsync();
         }
 
         public async Task<Event> GetEventById(Guid eventId)
         {
-            return await _eventCatalogDbContext.Events.Include(x => x.Category).Where(x => x.EventId == eventId).FirstOrDefaultAsync();
+            return await _eventCatalogDbContext.Events
+                .Include(x => x.Category)
+                .Include(x => x.Venue)
+                .Where(x => x.EventId == eventId).FirstOrDefaultAsync();
         }
 
-        public async Task<bool> SaveChanges()
-        {
-            return (await _eventCatalogDbContext.SaveChangesAsync() > 0);
-        }
+        //public async Task<bool> SaveChanges()
+        //{
+        //    return (await _eventCatalogDbContext.SaveChangesAsync() > 0);
+        //}
+
     }
 }
