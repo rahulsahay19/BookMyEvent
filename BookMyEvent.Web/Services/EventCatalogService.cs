@@ -46,6 +46,12 @@ namespace BookMyEvent.Web.Services
             return await response.ReadContentAs<PriceUpdate>();
         }
 
+        public async Task<EventUpdate> UpdateEvent(EventUpdate eventUpdate)
+        {
+            var response = await client.PostAsJson($"api/events/eventupdate", eventUpdate);
+            return await response.ReadContentAs<EventUpdate>();
+        }
+
     }
 }
 

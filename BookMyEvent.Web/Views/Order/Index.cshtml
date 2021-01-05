@@ -1,5 +1,5 @@
 ﻿
-@model OrderViewModel
+@model OrderListViewModel
 
 
 <h2>Your orders</h2>
@@ -8,10 +8,13 @@
 <table class="table">
     <thead>
         <tr class="columnHeader">
-            <th>ID</th>
-            <th>DATE</th>
-            <th>TOTAL</th>
-            <th>PAID?</th>
+            <th>ORDER DATE</th>
+            @if (Model.HasMessage)
+            {
+                <th>MESSAGE</th>
+            }
+            <th>ORDER TOTAL</th>
+            <th>PAID</th>
             <th></th>
         </tr>
     </thead>
@@ -19,10 +22,16 @@
         @foreach (var line in Model.Orders)
         {
         <tr>
-            <td>@line.Id</td>
             <td>@line.OrderPlaced.ToShortDateString()</td>
+            @if (Model.HasMessage)
+            {
+                <td class="boldRed">@line.Message</td>
+            }
             <td class="bold">$@line.OrderTotal</td>
             <td class="bold">@line.OrderPaid</td>
+            <td>
+                <a class="btn-primary" type="button" asp-action="Detail" asp-route-orderId="@line.Id">DETAILS</a>
+            </td>
         </tr>
         }
     </tbody>

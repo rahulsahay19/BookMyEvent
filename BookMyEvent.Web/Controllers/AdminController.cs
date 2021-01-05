@@ -1,5 +1,6 @@
 ﻿using BookMyEvent.Web.Models;
 using BookMyEvent.Web.Models.Api;
+using BookMyEvent.Web.Models.View;
 using BookMyEvent.Web.Services;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -28,17 +29,34 @@ namespace BookMyEvent.Web.Controllers
         {
             var selectedEvent = (await eventCatalogService.GetAll()).Where(x => x.EventId == eventId).FirstOrDefault();
 
-            return View(selectedEvent);
+            var vm = new EventUpdateViewModel()
+            {
+                EventId = selectedEvent.EventId,
+                Name = selectedEvent.Name,
+                Date = selectedEvent.Date,
+                Price = selectedEvent.Price,
+                Message = ""
+            };
+
+            return View(vm);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Details(Event eventPriceUpdateViewModel)
+        public async Task<IActionResult> Details(EventUpdateViewModel eventUpdateViewModel)
         {
+            EventUpdate eventUpdate = new EventUpdate()
+            {
+                EventId = eventUpdateViewModel.EventId,
+                Price = eventUpdateViewModel.Price,
+                Name = eventUpdateViewModel.Name,
+                Date = eventUpdateViewModel.Date,
+                Message = eventUpdateViewModel.Message
+            };
 
-            PriceUpdate priceUpdate = new PriceUpdate() { EventId = eventPriceUpdateViewModel.EventId, Price = eventPriceUpdateViewModel.Price };
-            await eventCatalogService.UpdatePrice(priceUpdate);
+            await eventCatalogService.UpdateEvent(eventUpdate);
 
             return RedirectToAction("Index");
         }
     }
+
 }

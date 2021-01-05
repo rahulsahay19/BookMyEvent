@@ -12,5 +12,6 @@ namespace BookMyEvent.Web.Services
         Task<Event> GetEvent(Guid id);
         Task<IEnumerable<Category>> GetCategories();
         Task<PriceUpdate> UpdatePrice(PriceUpdate priceUpdate);
+        Task<EventUpdate> UpdateEvent(EventUpdate priceUpdate);
     }
 }

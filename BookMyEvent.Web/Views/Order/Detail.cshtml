@@ -1,0 +1,61 @@
+﻿@model BookMyEvent.Web.Models.Api.Order
+
+<h2>Your Order</h2>
+
+@if (Model.Message != null)
+{
+    <h4 class="boldRed">@Model.Message</h4>    
+}
+
+<h4>Here are the events for your order.</h4>
+<br/>
+<div class="container">
+    <div class="row">
+        <div class="col-md">
+            <h5>Order Date: <span class="bold">@Model.OrderPlaced.ToShortDateString()<span/></h5>
+        </div>
+        <div class="col-md">
+            <h5>Order Total: <span class="bold">$@Model.OrderTotal</span></h5>
+        </div>
+        <div class="col-md">
+            <h5>Order Paid: <span class="bold">@Model.OrderPaid</span></h5>
+        </div>
+    </div>
+</div>
+<br/>
+<table class="table">
+    <thead>
+        <tr class="columnHeader text-center">
+            <th>EVENT NAME</th>
+            <th>DATE</th>
+            @if (Model.Message != null)
+            {
+                <th>Message</th>
+
+            }
+            <th>QUANTITY</th>
+            <th>VENUE</th>
+            <th>CITY</th>
+            <th>COUNTRY</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var line in Model.OrderLines)
+        {
+        <tr class="text-center">
+            <td>@line.EventName</td>
+            <td>@line.EventDate</td>
+            @if (Model.Message != null)
+            {
+                <td class="boldRed">@line.Message</td>
+
+            }
+            <td>@line.TicketAmount</td>
+            <td>@line.VenueName</td>
+            <td>@line.VenueCity</td>
+            <td>@line.VenueCountry</td>
+        </tr>
+        }
+
+    </tbody>
+</table>

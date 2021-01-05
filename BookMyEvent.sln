@@ -38,11 +38,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "External.PaymentGateway", "
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Gateway", "Gateway", "{4D5415BE-B958-4EEF-87D7-7A82877D80F8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookMyEvent.Gateway.WebBff", "BookMyEvent.Gateway.WebBff\BookMyEvent.Gateway.WebBff.csproj", "{260CC0E6-32FA-49DD-9F44-53D6EBB0C49E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookMyEvent.Gateway.WebBff", "BookMyEvent.Gateway.WebBff\BookMyEvent.Gateway.WebBff.csproj", "{260CC0E6-32FA-49DD-9F44-53D6EBB0C49E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookMyEvent.Gateway.Shared", "BookMyEvent.Gateway.Shared\BookMyEvent.Gateway.Shared.csproj", "{620D9197-7D73-4F98-A685-A625E2B6F19A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookMyEvent.Gateway.Shared", "BookMyEvent.Gateway.Shared\BookMyEvent.Gateway.Shared.csproj", "{620D9197-7D73-4F98-A685-A625E2B6F19A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookMyEvent.Web.Bff", "BookMyEvent.Web.Bff\BookMyEvent.Web.Bff.csproj", "{3849876E-3EF6-440D-BCB9-9FD1225EBA4D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookMyEvent.Web.Bff", "BookMyEvent.Web.Bff\BookMyEvent.Web.Bff.csproj", "{3849876E-3EF6-440D-BCB9-9FD1225EBA4D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookMyEvent.Services.IntegrationEventPublisher", "BookMyEvent.Services.IntegrationEventPublisher\BookMyEvent.Services.IntegrationEventPublisher.csproj", "{5C42A03B-4DE3-4D02-9BD8-8C348672DDF2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -102,6 +104,10 @@ Global
 		{3849876E-3EF6-440D-BCB9-9FD1225EBA4D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3849876E-3EF6-440D-BCB9-9FD1225EBA4D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3849876E-3EF6-440D-BCB9-9FD1225EBA4D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5C42A03B-4DE3-4D02-9BD8-8C348672DDF2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5C42A03B-4DE3-4D02-9BD8-8C348672DDF2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5C42A03B-4DE3-4D02-9BD8-8C348672DDF2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5C42A03B-4DE3-4D02-9BD8-8C348672DDF2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -120,6 +126,7 @@ Global
 		{260CC0E6-32FA-49DD-9F44-53D6EBB0C49E} = {4D5415BE-B958-4EEF-87D7-7A82877D80F8}
 		{620D9197-7D73-4F98-A685-A625E2B6F19A} = {4D5415BE-B958-4EEF-87D7-7A82877D80F8}
 		{3849876E-3EF6-440D-BCB9-9FD1225EBA4D} = {791A06E9-72A8-4713-8C19-89749E1D0466}
+		{5C42A03B-4DE3-4D02-9BD8-8C348672DDF2} = {821DD360-A563-4AB6-9C72-D0945FD7B7AC}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {5F6305B2-1AAD-4ACA-9A7B-4A8808D27899}
