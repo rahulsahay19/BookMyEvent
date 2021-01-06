@@ -3,8 +3,11 @@ using BookMyEvent.Integration.MessagingBus;
 using BookMyEvent.Services.EventCatalog.DbContexts;
 using BookMyEvent.Services.EventCatalog.Repositories;
 using BookMyEvent.Services.EventCatalog.Services;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -50,11 +53,29 @@ namespace BookMyEvent.Services.EventCatalog
 
             services.AddSingleton<IMessageBus, AzServiceBusMessageBus>();
 
-            services.AddControllers();
+            var requireAuthenticationUserPolicy = new AuthorizationPolicyBuilder()
+                           .RequireAuthenticatedUser()
+                           .Build();
+
+            //This way we can enforce authentication on all controllers
+            services.AddControllers(configure =>
+            {
+                configure.Filters.Add(new AuthorizeFilter(requireAuthenticationUserPolicy));
+            });
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Event Catalog API", Version = "v1" });
             });
+
+
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options =>
+                {
+                    // This way middleware will know, where to find well known document
+                    options.Authority = "https://localhost:5012";
+                    // only token with audience with bookmyevent value will only be allowed
+                    options.Audience = "bookmyevent";
+                });
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -75,6 +96,8 @@ namespace BookMyEvent.Services.EventCatalog
             });
 
             app.UseRouting();
+
+            app.UseAuthentication();
 
             app.UseAuthorization();
 

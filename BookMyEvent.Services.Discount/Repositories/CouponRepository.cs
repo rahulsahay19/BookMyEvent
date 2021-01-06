@@ -16,26 +16,15 @@ namespace BookMyEvent.Services.Discount.Repositories
             _discountDbContext = discountDbContext;
         }
 
-        public async Task<Coupon> GetCouponByCode(string couponCode)
-        {
-            return await _discountDbContext.Coupons.Where(x => x.Code == couponCode).FirstOrDefaultAsync();
-        }
-
-        public async Task UseCoupon(Guid couponId)
-        {
-            var couponToUpdate =
-                await _discountDbContext.Coupons.Where(x => x.CouponId == couponId).FirstOrDefaultAsync();
-
-            if (couponToUpdate == null)
-                throw new Exception();
-
-            couponToUpdate.AlreadyUsed = true;
-            await _discountDbContext.SaveChangesAsync();
-        }
-
         public async Task<Coupon> GetCouponById(Guid couponId)
         {
             return await _discountDbContext.Coupons.Where(x => x.CouponId == couponId).FirstOrDefaultAsync();
+        }
+
+        public async Task<Coupon> GetCouponByUserId(Guid userId)
+        {
+            // TODO!
+            return await _discountDbContext.Coupons.Where(x => x.UserId == userId).FirstOrDefaultAsync();
         }
     }
 }

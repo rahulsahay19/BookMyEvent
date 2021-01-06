@@ -6,8 +6,7 @@ namespace BookMyEvent.Services.Discount.Repositories
 {
     public interface ICouponRepository
     {
-        Task<Coupon> GetCouponByCode(string couponCode);
-        Task UseCoupon(Guid couponId);
+        Task<Coupon> GetCouponByUserId(Guid userId);
         Task<Coupon> GetCouponById(Guid couponId);
     }
 }

@@ -1,13 +1,12 @@
-﻿{
+{
   "profiles": {
-     "BookMyEvent.Services.ShoppingCart": {
+    "BookMyEvent.Services.ShoppingCart": {
       "commandName": "Project",
-      "launchBrowser": true,
       "launchUrl": "swagger",
-      "applicationUrl": "https://localhost:5002",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
-      }
+      },
+      "applicationUrl": "https://localhost:5002"
     }
   }
 }

@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using BookMyEvent.Services.EventCatalog.DTOs;
 using BookMyEvent.Services.EventCatalog.Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -8,6 +9,7 @@ using System.Threading.Tasks;
 namespace BookMyEvent.Services.EventCatalog.Controllers
 {
     [Route("api/categories")]
+    //[Authorize]
     public class CategoryController : ControllerBase
     {
         private ICategoryRepository _categoryRepository;

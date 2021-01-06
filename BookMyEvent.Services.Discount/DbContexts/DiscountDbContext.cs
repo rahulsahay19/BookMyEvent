@@ -17,31 +17,19 @@ namespace BookMyEvent.Services.Discount.DbContexts
         {
             base.OnModelCreating(modelBuilder);
 
-
             modelBuilder.Entity<Coupon>().HasData(new Coupon
             {
                 CouponId = Guid.NewGuid(),
-                Code = "BeNice",
                 Amount = 10,
-                AlreadyUsed = false
+                UserId = Guid.Parse("{E455A3DF-7FA5-47E0-8435-179B300D531F}")
             });
 
             modelBuilder.Entity<Coupon>().HasData(new Coupon
             {
                 CouponId = Guid.NewGuid(),
-                Code = "Awesome",
                 Amount = 20,
-                AlreadyUsed = false
+                UserId = Guid.Parse("{bbf594b0-3761-4a65-b04c-eec4836d9070}")
             });
-
-            modelBuilder.Entity<Coupon>().HasData(new Coupon
-            {
-                CouponId = Guid.NewGuid(),
-                Code = "AlmostFree",
-                Amount = 100,
-                AlreadyUsed = false
-            });
-
         }
     }
 }

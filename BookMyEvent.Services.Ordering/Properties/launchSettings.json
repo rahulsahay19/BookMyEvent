@@ -1,13 +1,12 @@
-﻿{
+{
   "profiles": {
     "BookMyEvent.Services.Ordering": {
       "commandName": "Project",
-      "launchBrowser": true,
       "launchUrl": "weatherforecast",
-      "applicationUrl": "https://localhost:5005",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
-      }
+      },
+      "applicationUrl": "https://localhost:5005"
     }
   }
 }

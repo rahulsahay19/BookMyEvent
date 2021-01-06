@@ -25,14 +25,11 @@ namespace BookMyEvent.Services.Discount.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<bool>("AlreadyUsed")
-                        .HasColumnType("bit");
-
                     b.Property<int>("Amount")
                         .HasColumnType("int");
 
-                    b.Property<string>("Code")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("CouponId");
 
@@ -41,24 +38,15 @@ namespace BookMyEvent.Services.Discount.Migrations
                     b.HasData(
                         new
                         {
-                            CouponId = new Guid("38086843-ada1-4f91-9fb4-79412cb57066"),
-                            AlreadyUsed = false,
+                            CouponId = new Guid("3f7dbbba-aecc-4f39-9a86-0a3f8a73396d"),
                             Amount = 10,
-                            Code = "BeNice"
+                            UserId = new Guid("e455a3df-7fa5-47e0-8435-179b300d531f")
                         },
                         new
                         {
-                            CouponId = new Guid("e493c11f-c402-415f-99ea-31cd0e97c32f"),
-                            AlreadyUsed = false,
+                            CouponId = new Guid("66e52ca9-6ab5-49a2-bed0-55eefabb73a9"),
                             Amount = 20,
-                            Code = "Awesome"
-                        },
-                        new
-                        {
-                            CouponId = new Guid("47721d9a-3ba6-48c1-88f6-e0ba1cd3fe4d"),
-                            AlreadyUsed = false,
-                            Amount = 100,
-                            Code = "AlmostFree"
+                            UserId = new Guid("bbf594b0-3761-4a65-b04c-eec4836d9070")
                         });
                 });
 #pragma warning restore 612, 618
