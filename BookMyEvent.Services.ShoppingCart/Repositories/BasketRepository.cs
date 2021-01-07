@@ -9,45 +9,43 @@ namespace BookMyEvent.Services.ShoppingCart.Repositories
 {
     public class BasketRepository : IBasketRepository
     {
-        private readonly ShoppingCartDbContext _shoppingCartDbContext;
+        private readonly ShoppingCartDbContext shoppingBasketDbContext;
 
-        public BasketRepository(ShoppingCartDbContext shoppingCartDbContext)
+        public BasketRepository(ShoppingCartDbContext shoppingBasketDbContext)
         {
-            _shoppingCartDbContext = shoppingCartDbContext;
+            this.shoppingBasketDbContext = shoppingBasketDbContext;
         }
 
         public async Task<Basket> GetBasketById(Guid basketId)
         {
-            return await _shoppingCartDbContext.Baskets.Include(sb => sb.BasketLines)
+            return await shoppingBasketDbContext.Baskets.Include(sb => sb.BasketLines)
                 .Where(b => b.BasketId == basketId).FirstOrDefaultAsync();
         }
 
         public async Task<bool> BasketExists(Guid basketId)
         {
-            return await _shoppingCartDbContext.Baskets
+            return await shoppingBasketDbContext.Baskets
                 .AnyAsync(b => b.BasketId == basketId);
         }
 
         public async Task ClearBasket(Guid basketId)
         {
-            var basketLinesToClear = _shoppingCartDbContext.BasketLines.Where(b => b.BasketId == basketId);
-            _shoppingCartDbContext.BasketLines.RemoveRange(basketLinesToClear);
+            var basketLinesToClear = shoppingBasketDbContext.BasketLines.Where(b => b.BasketId == basketId);
+            shoppingBasketDbContext.BasketLines.RemoveRange(basketLinesToClear);
 
-            var basket = _shoppingCartDbContext.Baskets.FirstOrDefault(b => b.BasketId == basketId);
-            if (basket != null) basket.CouponId = null;
+            var basket = shoppingBasketDbContext.Baskets.FirstOrDefault(b => b.BasketId == basketId);
 
             await SaveChanges();
         }
 
         public void AddBasket(Basket basket)
         {
-            _shoppingCartDbContext.Baskets.Add(basket);
+            shoppingBasketDbContext.Baskets.Add(basket);
         }
 
         public async Task<bool> SaveChanges()
         {
-            return (await _shoppingCartDbContext.SaveChangesAsync() > 0);
+            return (await shoppingBasketDbContext.SaveChangesAsync() > 0);
         }
     }
 }
-

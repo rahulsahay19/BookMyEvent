@@ -89,7 +89,7 @@ namespace BookMyEvent.Services.ShoppingCart.Controllers
             var basketLineToReturn = mapper.Map<BasketLine>(processedBasketLine);
 
             //log also to the event repo
-            BasketChangeEvent basketChangeEvent = new BasketChangeEvent
+            var basketChangeEvent = new BasketChangeEvent
             {
                 BasketChangeType = BasketChangeTypeEnum.Add,
                 EventId = basketLineForCreation.EventId,

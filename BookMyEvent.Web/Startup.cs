@@ -1,7 +1,11 @@
 using BookMyEvent.Web.Models;
 using BookMyEvent.Web.Services;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.OpenIdConnect;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -22,7 +26,16 @@ namespace BookMyEvent.Web
 
         public void ConfigureServices(IServiceCollection services)
         {
-            var builder = services.AddControllersWithViews();
+            services.AddHttpContextAccessor();
+
+            var requireAuthenticatedUserPolicy = new AuthorizationPolicyBuilder()
+            .RequireAuthenticatedUser()
+            .Build();
+
+            var builder = services.AddControllersWithViews(options =>
+            {
+                options.Filters.Add(new AuthorizeFilter(requireAuthenticatedUserPolicy));
+            });
 
             if (environment.IsDevelopment())
                 builder.AddRazorRuntimeCompilation();
@@ -41,6 +54,23 @@ namespace BookMyEvent.Web
 
 
             services.AddSingleton<Settings>();
+
+            services.AddAuthentication(options =>
+            {
+                options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = OpenIdConnectDefaults.AuthenticationScheme;
+            }).AddCookie(CookieAuthenticationDefaults.AuthenticationScheme)
+           .AddOpenIdConnect(OpenIdConnectDefaults.AuthenticationScheme, options =>
+           {
+               options.SignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+               options.Authority = "https://localhost:5012/";
+               options.ClientId = "bookmyeventinteractive";
+               options.ResponseType = "code";
+               options.SaveTokens = true;
+               options.ClientSecret = "d1ee8859-6e00-45f9-b749-3ae4124299a0";
+               options.GetClaimsFromUserInfoEndpoint = true;
+               options.Scope.Add("bookmyevent.fullaccess");
+           });
 
             //var storageAccount = CloudStorageAccount.Parse(config["AzureQueues:ConnectionString"]);
 
@@ -69,7 +99,7 @@ namespace BookMyEvent.Web
            // app.ApplicationServices.UseRebus();
 
             app.UseRouting();
-
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

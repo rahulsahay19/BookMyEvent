@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BookMyEvent.Services.ShoppingCart.Migrations
 {
     [DbContext(typeof(ShoppingCartDbContext))]
-    [Migration("20210102185924_InitialCreate")]
+    [Migration("20210107072527_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -25,9 +25,6 @@ namespace BookMyEvent.Services.ShoppingCart.Migrations
                 {
                     b.Property<Guid>("BasketId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid?>("CouponId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("UserId")
@@ -103,6 +100,44 @@ namespace BookMyEvent.Services.ShoppingCart.Migrations
                     b.HasKey("EventId");
 
                     b.ToTable("Events");
+
+                    b.HasData(
+                        new
+                        {
+                            EventId = new Guid("ee272f8b-6096-4cb6-8625-bb4bb2d89e8b"),
+                            Date = new DateTime(2021, 7, 7, 12, 55, 27, 480, DateTimeKind.Local).AddTicks(6910),
+                            Name = "John Egbert Live"
+                        },
+                        new
+                        {
+                            EventId = new Guid("3448d5a4-0f72-4dd7-bf15-c14a46b26c00"),
+                            Date = new DateTime(2021, 10, 7, 12, 55, 27, 482, DateTimeKind.Local).AddTicks(1024),
+                            Name = "The State of Affairs: Michael Live!"
+                        },
+                        new
+                        {
+                            EventId = new Guid("b419a7ca-3321-4f38-be8e-4d7b6a529319"),
+                            Date = new DateTime(2021, 5, 7, 12, 55, 27, 482, DateTimeKind.Local).AddTicks(1066),
+                            Name = "Clash of the DJs"
+                        },
+                        new
+                        {
+                            EventId = new Guid("62787623-4c52-43fe-b0c9-b7044fb5929b"),
+                            Date = new DateTime(2021, 5, 7, 12, 55, 27, 482, DateTimeKind.Local).AddTicks(1072),
+                            Name = "Spanish guitar hits with Manuel"
+                        },
+                        new
+                        {
+                            EventId = new Guid("1babd057-e980-4cb3-9cd2-7fdd9e525668"),
+                            Date = new DateTime(2021, 11, 7, 12, 55, 27, 482, DateTimeKind.Local).AddTicks(1076),
+                            Name = "Techorama 2021"
+                        },
+                        new
+                        {
+                            EventId = new Guid("adc42c09-08c1-4d2c-9f96-2d15bb1af299"),
+                            Date = new DateTime(2021, 9, 7, 12, 55, 27, 482, DateTimeKind.Local).AddTicks(1081),
+                            Name = "To the Moon and Back"
+                        });
                 });
 
             modelBuilder.Entity("BookMyEvent.Services.ShoppingCart.Entities.BasketLine", b =>

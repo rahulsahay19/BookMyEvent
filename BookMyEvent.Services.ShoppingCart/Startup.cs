@@ -3,9 +3,12 @@ using BookMyEvent.Integration.MessagingBus;
 using BookMyEvent.Services.ShoppingCart.DbContexts;
 using BookMyEvent.Services.ShoppingCart.Repositories;
 using BookMyEvent.Services.ShoppingCart.Services;
-using BookMyEvent.Services.ShoppingCart.Worker;
+//using BookMyEvent.Services.ShoppingCart.Worker;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -30,10 +33,28 @@ namespace BookMyEvent.Services.ShoppingCart
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
+
+            var requireAuthenticationUserPolicy = new AuthorizationPolicyBuilder()
+                           .RequireAuthenticatedUser()
+                           .Build();
+
+            //This way we can enforce authentication on all controllers
+            services.AddControllers(configure =>
+            {
+                configure.Filters.Add(new AuthorizeFilter(requireAuthenticationUserPolicy));
+            });
+
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+              .AddJwtBearer(options =>
+              {
+                    // This way middleware will know, where to find well known document
+                    options.Authority = "https://localhost:5012";
+                    // only token with audience with bookmyevent value will only be allowed
+                    options.Audience = "bookmyevent";
+              });
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
-            services.AddHostedService<ServiceBusListener>();
+           // services.AddHostedService<ServiceBusListener>();
             var optionsBuilder = new DbContextOptionsBuilder<ShoppingCartDbContext>();
             optionsBuilder.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
 
@@ -84,6 +105,7 @@ namespace BookMyEvent.Services.ShoppingCart
             });
 
             app.UseRouting();
+            app.UseAuthentication();
 
             app.UseAuthorization();
 

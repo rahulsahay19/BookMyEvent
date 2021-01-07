@@ -13,19 +13,15 @@ namespace BookMyEvent.Services.ShoppingCart.Services
         public DiscountService(HttpClient client)
         {
             this.client = client;
-            //this.client.DefaultRequestHeaders.Add("Accept", "...");
-            //this.client.BaseAddress = new Uri("...");
         }
 
-        public async Task<Coupon> GetCoupon(Guid couponId)
+        public async Task<Coupon> GetCoupon(Guid userId)
         {
-            var response = await client.GetAsync($"/api/discount/{couponId}");
-            return await response.ReadContentAs<Coupon>();
-        }
-
-        public async Task<Coupon> GetCouponWithError(Guid couponId)
-        {
-            var response = await client.GetAsync($"/api/discount/error/{couponId}");
+            var response = await client.GetAsync($"/api/discount/user/{userId}");
+            if (!response.IsSuccessStatusCode)
+            {
+                return null;
+            }
             return await response.ReadContentAs<Coupon>();
         }
     }

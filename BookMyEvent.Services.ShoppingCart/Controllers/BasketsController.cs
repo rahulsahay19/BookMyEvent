@@ -24,7 +24,10 @@ namespace BookMyEvent.Services.ShoppingCart.Controllers
         private readonly IMessageBus messageBus;
         private readonly IDiscountService discountService;
 
-        public BasketsController(IBasketRepository basketRepository, IMapper mapper, IMessageBus messageBus, IDiscountService discountService)
+        public BasketsController(IBasketRepository basketRepository,
+            IMapper mapper,
+            IMessageBus messageBus,
+            IDiscountService discountService)
         {
             this.basketRepository = basketRepository;
             this.mapper = mapper;
@@ -62,24 +65,6 @@ namespace BookMyEvent.Services.ShoppingCart.Controllers
                 basketToReturn);
         }
 
-        [HttpPut("{basketId}/coupon")]
-        [ProducesResponseType((int)HttpStatusCode.Accepted)]
-        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
-        public async Task<IActionResult> ApplyCouponToBasket(Guid basketId, Coupon coupon)
-        {
-            var basket = await basketRepository.GetBasketById(basketId);
-
-            if (basket == null)
-            {
-                return BadRequest();
-            }
-
-            basket.CouponId = coupon.CouponId;
-            await basketRepository.SaveChanges();
-
-            return Accepted();
-        }
-
         [HttpPost("checkout")]
         [ProducesResponseType((int)HttpStatusCode.Accepted)]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
@@ -96,7 +81,7 @@ namespace BookMyEvent.Services.ShoppingCart.Controllers
                     return BadRequest();
                 }
 
-                BasketCheckoutMessage basketCheckoutMessage = mapper.Map<BasketCheckoutMessage>(basketCheckout);
+                var basketCheckoutMessage = mapper.Map<BasketCheckoutMessage>(basketCheckout);
                 basketCheckoutMessage.BasketLines = new List<BasketLineMessage>();
                 int total = 0;
 
@@ -117,11 +102,11 @@ namespace BookMyEvent.Services.ShoppingCart.Controllers
                 //apply discount by talking to the discount service
                 Coupon coupon = null;
 
-                if (basket.CouponId.HasValue)
-                    coupon = await discountService.GetCoupon(basket.CouponId.Value);
+                // IRL, get the user id from this.User object
+                var userId = basketCheckout.UserId;
 
-                //if (basket.CouponId.HasValue)
-                //    coupon = await discountService.GetCouponWithError(basket.CouponId.Value);
+                if (!(userId == Guid.Empty))
+                    coupon = await discountService.GetCoupon(userId);
 
                 if (coupon != null)
                 {
@@ -149,7 +134,6 @@ namespace BookMyEvent.Services.ShoppingCart.Controllers
             {
                 string message = ex.Message;
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.StackTrace);
-
             }
             catch (Exception e)
             {

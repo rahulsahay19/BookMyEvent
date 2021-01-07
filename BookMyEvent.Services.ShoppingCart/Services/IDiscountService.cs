@@ -6,7 +6,6 @@ namespace BookMyEvent.Services.ShoppingCart.Services
 {
     public interface IDiscountService
     {
-        Task<Coupon> GetCoupon(Guid couponId);
-        Task<Coupon> GetCouponWithError(Guid couponId);
+        Task<Coupon> GetCoupon(Guid userId);
     }
 }
