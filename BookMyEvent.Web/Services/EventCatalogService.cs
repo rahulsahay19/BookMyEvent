@@ -35,9 +35,9 @@ namespace BookMyEvent.Web.Services
                 new ClientCredentialsTokenRequest
                 {
                     Address = discoveryDocumentResponse.TokenEndpoint,
-                    ClientId = "bookmyeventm2m",
-                    ClientSecret = "c89e03c5-7b84-456d-822c-edaca84ed7f4",
-                    Scope = "bookmyevent.fullaccess"
+                    ClientId = "bookmyevent",
+                    ClientSecret = "d1ee8859-6e00-45f9-b749-3ae4124299a0",
+                    Scope = "eventcatalog.read eventcatalog.write"
                 });
 
             if (tokenResponse.IsError)

@@ -74,8 +74,13 @@ namespace BookMyEvent.Services.EventCatalog
                     // This way middleware will know, where to find well known document
                     options.Authority = "https://localhost:5012";
                     // only token with audience with bookmyevent value will only be allowed
-                    options.Audience = "bookmyevent";
+                    options.Audience = "eventcatalog";
                 });
+            //Authorization Policy
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("CanRead", policy => policy.RequireClaim("scope", "eventcatalog.read", "eventcatalog.write"));
+            });
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

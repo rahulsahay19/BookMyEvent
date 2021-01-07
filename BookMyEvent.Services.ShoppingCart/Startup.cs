@@ -3,7 +3,6 @@ using BookMyEvent.Integration.MessagingBus;
 using BookMyEvent.Services.ShoppingCart.DbContexts;
 using BookMyEvent.Services.ShoppingCart.Repositories;
 using BookMyEvent.Services.ShoppingCart.Services;
-//using BookMyEvent.Services.ShoppingCart.Worker;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
@@ -50,7 +49,7 @@ namespace BookMyEvent.Services.ShoppingCart
                     // This way middleware will know, where to find well known document
                     options.Authority = "https://localhost:5012";
                     // only token with audience with bookmyevent value will only be allowed
-                    options.Audience = "bookmyevent";
+                    options.Audience = "shoppingbasket";
               });
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());

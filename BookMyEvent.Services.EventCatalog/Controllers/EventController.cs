@@ -4,6 +4,7 @@ using BookMyEvent.Services.EventCatalog.DTOs;
 using BookMyEvent.Services.EventCatalog.Entities;
 using BookMyEvent.Services.EventCatalog.Messages;
 using BookMyEvent.Services.EventCatalog.Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System;
@@ -14,6 +15,7 @@ namespace BookMyEvent.Services.EventCatalog.Controllers
 {
     [Route("api/events")]
     [ApiController]
+    [Authorize(Policy = "CanRead")]
     public class EventController : ControllerBase
     {
         //private readonly IEventRepository eventRepository;

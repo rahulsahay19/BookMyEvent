@@ -64,12 +64,12 @@ namespace BookMyEvent.Web
            {
                options.SignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
                options.Authority = "https://localhost:5012/";
-               options.ClientId = "bookmyeventinteractive";
+               options.ClientId = "bookmyevent";
                options.ResponseType = "code";
                options.SaveTokens = true;
                options.ClientSecret = "d1ee8859-6e00-45f9-b749-3ae4124299a0";
                options.GetClaimsFromUserInfoEndpoint = true;
-               options.Scope.Add("bookmyevent.fullaccess");
+               options.Scope.Add("shoppingbasket.fullaccess");
            });
 
             //var storageAccount = CloudStorageAccount.Parse(config["AzureQueues:ConnectionString"]);
