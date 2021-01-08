@@ -33,24 +33,25 @@ namespace BookMyEvent.Services.ShoppingCart
         public void ConfigureServices(IServiceCollection services)
         {
 
-            var requireAuthenticationUserPolicy = new AuthorizationPolicyBuilder()
-                           .RequireAuthenticatedUser()
-                           .Build();
+            //var requireAuthenticationUserPolicy = new AuthorizationPolicyBuilder()
+            //               .RequireAuthenticatedUser()
+            //               .Build();
 
-            //This way we can enforce authentication on all controllers
-            services.AddControllers(configure =>
-            {
-                configure.Filters.Add(new AuthorizeFilter(requireAuthenticationUserPolicy));
-            });
+            ////This way we can enforce authentication on all controllers
+            //services.AddControllers(configure =>
+            //{
+            //    configure.Filters.Add(new AuthorizeFilter(requireAuthenticationUserPolicy));
+            //});
+            services.AddControllers();
 
-            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-              .AddJwtBearer(options =>
-              {
-                    // This way middleware will know, where to find well known document
-                    options.Authority = "https://localhost:5012";
-                    // only token with audience with bookmyevent value will only be allowed
-                    options.Audience = "shoppingbasket";
-              });
+            //services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+            //  .AddJwtBearer(options =>
+            //  {
+            //        // This way middleware will know, where to find well known document
+            //        options.Authority = "https://localhost:5012";
+            //        // only token with audience with bookmyevent value will only be allowed
+            //        options.Audience = "shoppingbasket";
+            //  });
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
            // services.AddHostedService<ServiceBusListener>();
@@ -104,7 +105,7 @@ namespace BookMyEvent.Services.ShoppingCart
             });
 
             app.UseRouting();
-            app.UseAuthentication();
+       //     app.UseAuthentication();
 
             app.UseAuthorization();
 

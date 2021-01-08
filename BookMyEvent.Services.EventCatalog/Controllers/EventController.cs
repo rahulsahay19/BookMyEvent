@@ -15,7 +15,7 @@ namespace BookMyEvent.Services.EventCatalog.Controllers
 {
     [Route("api/events")]
     [ApiController]
-    [Authorize(Policy = "CanRead")]
+   // [Authorize(Policy = "CanRead")]
     public class EventController : ControllerBase
     {
         //private readonly IEventRepository eventRepository;
