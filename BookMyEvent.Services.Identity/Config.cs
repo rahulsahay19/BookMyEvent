@@ -21,7 +21,7 @@ namespace BookMyEvent.Services.Identity
                 //each microservice will be an API Resource
                 new ApiResource("eventcatalog", "Event Catalog API")
                 {
-                    Scopes = { "eventcatalog.read", "eventcatalog.write" }
+                    Scopes = { "eventcatalog.fullaccess" }
                 },
                 new ApiResource("shoppingbasket", "Shopping Basket API")
                 {
@@ -79,7 +79,7 @@ namespace BookMyEvent.Services.Identity
                     AllowedGrantTypes = GrantTypes.CodeAndClientCredentials,
                     RedirectUris = { "https://localhost:5000/signin-oidc" },
                     PostLogoutRedirectUris = { "https://localhost:5000/signout-callback-oidc" },
-                    AllowedScopes = { "openid", "profile", "shoppingbasket.fullaccess", "eventcatalog.read", "eventcatalog.write", "bookmyeventgateway.fullaccess" }
+                    AllowedScopes = { "openid", "profile", "shoppingbasket.fullaccess", "eventcatalog.fullaccess", "bookmyeventgateway.fullaccess" }
                 }
             };
     }

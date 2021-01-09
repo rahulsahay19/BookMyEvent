@@ -103,7 +103,8 @@ namespace BookMyEvent.Services.ShoppingCart.Controllers
                 Coupon coupon = null;
 
                 // This is unverified information, hence we should not use it from view model
-                var userId = basketCheckout.UserId;
+                //var userId = basketCheckout.UserId;
+                var userId = Guid.Parse(User.Claims.FirstOrDefault(c=>c.Type=="sub")?.Value ?? string.Empty);
                 //TODO not working Rather read the same from gateway, which is part of the claims
                 //var userId = Guid.Parse(HttpContext.Request.Headers["CurrentUser"][0]);
 

@@ -14,6 +14,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using System;
+using System.Net;
 
 namespace BookMyEvent.Services.EventCatalog
 {
@@ -53,31 +54,31 @@ namespace BookMyEvent.Services.EventCatalog
 
             services.AddSingleton<IMessageBus, AzServiceBusMessageBus>();
 
-            //var requireAuthenticationUserPolicy = new AuthorizationPolicyBuilder()
-            //               .RequireAuthenticatedUser()
-            //               .Build();
+            var requireAuthenticationUserPolicy = new AuthorizationPolicyBuilder()
+                           .RequireAuthenticatedUser()
+                           .Build();
 
-            services.AddControllers();
+            // services.AddControllers();
             //This way we can enforce authentication on all controllers
-            //services.AddControllers(configure =>
-            //{
-            //    configure.Filters.Add(new AuthorizeFilter(requireAuthenticationUserPolicy));
-            //});
+            services.AddControllers(configure =>
+            {
+                configure.Filters.Add(new AuthorizeFilter(requireAuthenticationUserPolicy));
+            });
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Event Catalog API", Version = "v1" });
             });
 
 
-            //services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-            //    .AddJwtBearer(options =>
-            //    {
-            //        // This way middleware will know, where to find well known document
-            //        options.Authority = "https://localhost:5012";
-            //        // only token with audience with bookmyevent value will only be allowed
-            //        options.Audience = "eventcatalog";
-            //    });
-            //Authorization Policy
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options =>
+                {
+                    // This way middleware will know, where to find well known document
+                    options.Authority = "https://localhost:5012";
+                    // only token with audience with bookmyevent value will only be allowed
+                    options.Audience = "eventcatalog";
+                });
+           // Authorization Policy
             //services.AddAuthorization(options =>
             //{
             //    options.AddPolicy("CanRead", policy => policy.RequireClaim("scope", "eventcatalog.read", "eventcatalog.write"));
@@ -103,7 +104,7 @@ namespace BookMyEvent.Services.EventCatalog
 
             app.UseRouting();
 
-          //  app.UseAuthentication();
+            app.UseAuthentication();
 
             app.UseAuthorization();
 
