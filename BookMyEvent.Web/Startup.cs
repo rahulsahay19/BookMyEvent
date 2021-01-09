@@ -70,6 +70,7 @@ namespace BookMyEvent.Web
                options.ClientSecret = "d1ee8859-6e00-45f9-b749-3ae4124299a0";
                options.GetClaimsFromUserInfoEndpoint = true;
                options.Scope.Add("shoppingbasket.fullaccess");
+               options.Scope.Add("bookmyeventgateway.fullaccess");
            });
 
             //var storageAccount = CloudStorageAccount.Parse(config["AzureQueues:ConnectionString"]);

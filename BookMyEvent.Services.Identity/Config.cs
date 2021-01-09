@@ -26,6 +26,14 @@ namespace BookMyEvent.Services.Identity
                 new ApiResource("shoppingbasket", "Shopping Basket API")
                 {
                     Scopes = { "shoppingbasket.fullaccess" }
+                },
+                new ApiResource("discount", "Discount API")
+                {
+                    Scopes = { "discount.fullaccess" }
+                },
+                new ApiResource("bookmyeventgateway", "BookMyEvent Gateway")
+                {
+                    Scopes = { "bookmyeventgateway.fullaccess" }
                 }
             };
 
@@ -36,7 +44,9 @@ namespace BookMyEvent.Services.Identity
                new ApiScope("eventcatalog.fullaccess"),
                new ApiScope("eventcatalog.read"),
                new ApiScope("eventcatalog.write"),
-               new ApiScope("shoppingbasket.fullaccess")
+               new ApiScope("shoppingbasket.fullaccess"),
+               new ApiScope("discount.fullaccess"),
+               new ApiScope("bookmyeventgateway.fullaccess")
             };
 
         public static IEnumerable<Client> Clients =>
@@ -69,7 +79,7 @@ namespace BookMyEvent.Services.Identity
                     AllowedGrantTypes = GrantTypes.CodeAndClientCredentials,
                     RedirectUris = { "https://localhost:5000/signin-oidc" },
                     PostLogoutRedirectUris = { "https://localhost:5000/signout-callback-oidc" },
-                    AllowedScopes = { "openid", "profile", "shoppingbasket.fullaccess", "eventcatalog.read", "eventcatalog.write" }
+                    AllowedScopes = { "openid", "profile", "shoppingbasket.fullaccess", "eventcatalog.read", "eventcatalog.write", "bookmyeventgateway.fullaccess" }
                 }
             };
     }

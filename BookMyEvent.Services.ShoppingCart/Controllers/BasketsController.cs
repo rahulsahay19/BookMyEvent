@@ -102,8 +102,10 @@ namespace BookMyEvent.Services.ShoppingCart.Controllers
                 //apply discount by talking to the discount service
                 Coupon coupon = null;
 
-                // IRL, get the user id from this.User object
+                // This is unverified information, hence we should not use it from view model
                 var userId = basketCheckout.UserId;
+                //TODO not working Rather read the same from gateway, which is part of the claims
+                //var userId = Guid.Parse(HttpContext.Request.Headers["CurrentUser"][0]);
 
                 if (!(userId == Guid.Empty))
                     coupon = await discountService.GetCoupon(userId);
